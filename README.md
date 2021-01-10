@@ -3,6 +3,8 @@
 Para el desarrollo de esta práctica se ha propuesto implementar un _bullet hell_ empleando el nuevo sistema DOTS de Unity. Este sistema permite 
 mejorar ampliamente el rendimiento de los juegos al estructurar los datos en memoria de forma que se aproveche al máximo la chache así como los diferentes hilos del procesador.
 
+Un gameplay rudimentario se puede encontrar en el siguiente enlace: https://youtu.be/sNvQRO9VpuI 
+
 # TUTORIAL y GAMEPLAY
     El objetivo del juego es sobrevivir a tantas oleadas como sea posible, el juego dispone de una dificultad "dinámica" esto es: Cada vez que el jugador sea capaz de eliminar a todos los enemigos antes de que llegue la siguiente oleada, aumentará la frecuencia de aparición así como el número de enemigos.
 
