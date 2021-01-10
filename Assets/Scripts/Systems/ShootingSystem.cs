@@ -18,11 +18,14 @@ public class ShootingSystem : SystemBase
 {
     // Esto es una referencia al commandBuffer.
     BeginSimulationEntityCommandBufferSystem instantiateEntitiesCommandBuffer;
+    //NativeArray<float> time;
 
     protected override void OnCreate()
     {
         // Inicializamos la referencia.
         instantiateEntitiesCommandBuffer = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
+        //time = new NativeArray<float>(new float[] {0.0f}, Allocator.Persistent);
+        
     }
 
     protected override void OnUpdate()
@@ -41,7 +44,7 @@ public class ShootingSystem : SystemBase
                 CharacterControllerInputData playerData = characterInputDataArray[cannonData.player];//EntityManager.GetComponentData<CharacterControllerInputData>(player);
 
                 //// Si esta disparando.
-                if (playerData.shooting)
+                if (playerData.shooting /*&& time[0] > 0.1f*/ ) // TODOOOOO Necesitamos 2 tiempos uno para cada jugador.
                 {
                     // Instanciamos una bala.
                     Entity instantiatedEntity = commandBuffer.Instantiate(cannonData.ammo);
