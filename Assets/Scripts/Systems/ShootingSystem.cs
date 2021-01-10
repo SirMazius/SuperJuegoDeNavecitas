@@ -32,7 +32,6 @@ public class ShootingSystem : SystemBase
     {
         var commandBuffer = instantiateEntitiesCommandBuffer.CreateCommandBuffer();
         var characterInputDataArray = GetComponentDataFromEntity<CharacterControllerInputData>();
-
         // TODO: Controlar la cadencia.
 
         Entities.WithAll<CannonData>().ForEach((in Entity entity, in LocalToWorld worldPos, in CannonData cannonData) => {
