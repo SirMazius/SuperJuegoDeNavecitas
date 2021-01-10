@@ -23,19 +23,20 @@ El sistema trabaja de la siguiente forma, los GameObjects pasan a llamarse entid
 
 La información que presenta Unity es prácticamente nula, se encuentra dispersa y desactualizada de forma generalizada. Es sencillo encontra tipos de sistema que han dejado de existir o de los que la única información disponible es el nombre de la función y los atributos que se le pasan. Además dado que está en _Preview_ resulta sencillo que salten errores sin explicación aparente que se solventan reiniciando el juego o el editor. Finalmente a la hora de depurar el juego resulta muy complejo ya que los mensajes de error aluden a liberías internas del sistema lo cual ayuda poco. 
 
-Algo importante es la pérdida de rendimiento al jugar en el editor, ya que Unity tiene que gestionar toda la información de las entidades para que las puedes visualizar. Se recomienda jugar haciendo una build del juego.
+Algo importante es la pérdida de rendimiento al jugar en el editor, ya que Unity tiene que gestionar toda la información de las entidades para que las puedes visualizar. Se recomienda jugar haciendo una _build_ del juego. (**NOTA** Para ejecutar la _build_ hay que hacerlo como admin)
 
 Hay que hacer notar que aspectos que parecerían sencillos como interactuar con la UI o instanciar partículas, requieren sincronizar los sistemas ya que estos se ejecutan de forma concurrente.
 
 Terminada la ronda de quejas, describimos a continuación los módulos que se han desarrollado.
 
+- Extensión de Cinemachine que permite un mejor control del zoom de la cámara para mantener el encuadre
 - Sistema de menús con opciones gráficas
 - Modos de 1 y 2 jugadores con soporte para _gamepad_ con el nuevo _Input System_
 - _Gameplay_ básico en el que los jugadores han de sobrevivir oleadas y acumular todos los puntos posibles
 - Sistema de _Flocking_ que gestiona el movimiento de los enemigos mediante comportamientos emergentes
 - Estética _Neon_ empleando la URP y mapas de emisión
 
-Cosas que se han quedado a medias:
+Cosas que se han quedado por el camino:
 
 - Sistema de sonido
 - Sistema de particulas mediante Pooling
@@ -43,5 +44,8 @@ Cosas que se han quedado a medias:
 - Tutorial _ingame_
 - Mejoras en los patrones de spawn y de los enemigos
 - Mejoras de la UI 
+
+
+Finalmente, respecto al código, se ha comentado todo el proyecto de forma exhaustiva con el fin de que quede claro que hace cada módulo. No obstante, para cualquier duda pongase en contacto conmigo.
 
 ***1** Respecto al sistema de puntuación online no se ha podido integrar en el proyecto por falta de tiempo. No obstante sí se ha desarrollado en el lado del servidor. A través de esta url https://superjuegodenavecitasapi.azurewebsites.net/score/1 se pueden hacer llamadas a una api REST desarrollada en python empleando flask. 
