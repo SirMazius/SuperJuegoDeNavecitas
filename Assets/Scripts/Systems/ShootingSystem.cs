@@ -11,7 +11,7 @@ using Unity.Transforms;
 */
 
 [UpdateInGroup(typeof(SimulationSystemGroup))] // Es el grupo por defecto para los sistemas no seria necesario definirlo.
-[UpdateAfter(typeof(InputSystem))]
+//[UpdateAfter(typeof(InputSystem))]
 [UpdateBefore(typeof(BulletHitSystem))]
 
 public class ShootingSystem : SystemBase

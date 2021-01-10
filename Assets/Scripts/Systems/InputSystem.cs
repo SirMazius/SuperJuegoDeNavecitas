@@ -8,8 +8,8 @@ using UnityEngine.InputSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// TODO: Forzar que se actualice este sistema antes que el que mueva al jugador.
-//[DisableAutoCreation]
+
+[DisableAutoCreation]
 [AlwaysUpdateSystem]
 public class InputSystem : SystemBase/*, InputActions.IPlayerActionsActions*/ // No es necesario implementar esta interfaz porque no vamos a usar los eventos.
 {
@@ -44,7 +44,7 @@ public class InputSystem : SystemBase/*, InputActions.IPlayerActionsActions*/ //
     protected override void OnCreate()
     {
         // Diferenciamos si estamos en la escena de 1 jugador o en la de 2.
-        if (SceneManager.GetActiveScene().name == "12Jugador") // TODO: Este valor esta para hacer pruebas.
+        if (SceneManager.GetActiveScene().name == "1Jugador") // TODO: Este valor esta para hacer pruebas.
         {
             //Definimos una instancia que manejara los inputs del jugador.
             inputActions = new InputActions();

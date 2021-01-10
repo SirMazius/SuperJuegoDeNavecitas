@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Entities;
 using UnityEngine;
 /*
     Esta clase gestiona la condicion de derrota del jugador. 
@@ -12,14 +13,20 @@ namespace SJDN // Como somos bastante listos este sceneManager enmascara al de U
         public static SceneManager instance;
         public TMPro.TextMeshProUGUI scoreText;
         public TMPro.TextMeshProUGUI healthText;
+        public GameDataSO gameData;
         public int healthRemaining;
-        public int currentScore;
+        private InputSystem inputSystem;
         // Start is called before the first frame update
         void Start()
         {
             if (instance == null)
             {
                 instance = this;
+                gameData.finalScore = 0;
+                // Inicializamos los input del jugador ahora que sabemos en que escena nos encontramos.
+                inputSystem = World.DefaultGameObjectInjectionWorld.CreateSystem<InputSystem>();
+                inputSystem.Enabled = true;
+                //inputSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<InputSystem>();
             }
             else
             {
@@ -30,22 +37,27 @@ namespace SJDN // Como somos bastante listos este sceneManager enmascara al de U
         // Update is called once per frame
         void Update()
         {
+            // Forzamos la actualizacion... por algun motivo no lo hace en automatico y eso que se lo especificamos.
+            inputSystem.Update();
             // Se acaba la partida.
-            //if (healthRemaining <= 0)
-            //{
-            //    Debug.Log("FIN de la partida");
-            //    // TODO: Ejecutar una query que marque para destruiar a las naves de los enemigos. y ejecutar una corutina que nos cambie de escena.
-            //    /*
-            //        EL SISTEMA QUE DESTRUYE A LOS ENEMIGOS ES EL ENCARCAGADO DE INSTANCIA EXPLOSIONES DESDE EL POOLER. 
-            //        CREAMOS OTRO SISTEMA QUE SE ENCARGUE DE ESTRUIR A LOS JUGADORES E INTANCIAR TAMBIEN DESDE EL POOLER.
-            //    */
-            //}
+            if (healthRemaining <= 0)
+            {
+
+                UnityEngine.SceneManagement.SceneManager.LoadScene("EndScene");
+                //    Debug.Log("FIN de la partida");
+                //    // TODO: Ejecutar una query que marque para destruiar a las naves de los enemigos. y ejecutar una corutina que nos cambie de escena.
+                //    /*
+                //        EL SISTEMA QUE DESTRUYE A LOS ENEMIGOS ES EL ENCARCAGADO DE INSTANCIA EXPLOSIONES DESDE EL POOLER. 
+                //        CREAMOS OTRO SISTEMA QUE SE ENCARGUE DE ESTRUIR A LOS JUGADORES E INTANCIAR TAMBIEN DESDE EL POOLER.
+                //    */
+                //}
+            }
         }
 
         public void LoseHealth()
         {
             healthRemaining--;
-            //UpdateHealthUi();
+            UpdateHealthUi();
         }
 
         public void AddHealth()
@@ -57,18 +69,23 @@ namespace SJDN // Como somos bastante listos este sceneManager enmascara al de U
         // TODO: mejorar esto para que ponga los +++ en vez de un numero.
         public void UpdateHealthUi()
         {
-            scoreText.SetText(healthRemaining.ToString());
+            healthText.SetText(@"VIDAS <material=Liberation2>" + healthRemaining.ToString());
         }
 
         public void AddScore(int score)
         {
-            currentScore += score;
+            gameData.finalScore += score;
             UpdateScoreUi();
         }
 
         public void UpdateScoreUi()
         {
-            scoreText.SetText(currentScore.ToString());
+            scoreText.SetText(@"SCORE <material=Liberation2>" + gameData.finalScore.ToString());
+        }
+
+        private void OnDisable()
+        {
+            World.DefaultGameObjectInjectionWorld.DestroySystem(inputSystem);
         }
     }
 

@@ -5,7 +5,7 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-[UpdateAfter(typeof(InputSystem))]
+// [UpdateAfter(typeof(InputSystem))]
 public class PlayerMovementSystem : SystemBase
 {
     protected override void OnUpdate()

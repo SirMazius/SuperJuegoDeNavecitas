@@ -15,6 +15,7 @@ public class Spawner : MonoBehaviour
     BlobAssetStore blobAsset;
     public float wavesInterval;
     public float circleRadious;
+    public int initialEnemies;
     float time;
     private bool freshWave;
     // Start is called before the first frame update
@@ -26,9 +27,11 @@ public class Spawner : MonoBehaviour
         freshWave = false;
         instantiateEntitiesCommandBuffer = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
         entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-        blobAsset = new BlobAssetStore();
+        
+        blobAsset = new BlobAssetStore(); 
         GameObjectConversionSettings conversionSettings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, blobAsset);
         enemyEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(enemyPrefab, conversionSettings);
+        //
     }
     
     /*
@@ -54,7 +57,7 @@ public class Spawner : MonoBehaviour
             }
 
             // Generamos un punto en un circulo.
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < initialEnemies; i++)
             {
                 float randomAngle = UnityEngine.Random.Range(0, 2 * math.PI);
                 float3 randomPos = new float3(math.cos(randomAngle) * circleRadious + circleCenter.x, 0,
@@ -88,6 +91,7 @@ public class Spawner : MonoBehaviour
         if (freshWave && time < wavesInterval && entityManager.CreateEntityQuery(typeof(EnemyTag)).CalculateEntityCount() == 1) // == 1 porque hay una entidad "fantasma" que representa a la que se usa para instanciar al resto de los enemigos.
         {
             wavesInterval = math.clamp(wavesInterval - 1, 0, 20);
+            initialEnemies =  (int)(initialEnemies * 1.5f);
             // Limitamos poder bajar el tiempo a una vez por ronda.
             freshWave = false;
         }
@@ -95,6 +99,10 @@ public class Spawner : MonoBehaviour
     }
 
     private void OnDisable()
+    {
+        // Tenemos que destruir todas las entidades.
+    }
+    private void OnDestroy()
     {
         blobAsset.Dispose();
     }

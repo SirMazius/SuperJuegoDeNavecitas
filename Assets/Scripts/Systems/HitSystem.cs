@@ -109,7 +109,7 @@ public class BulletHitSystem : SystemBase
 
         JobHandle enemySysOutputDeps = enemyJob.Schedule(stepPhysicsWorld.Simulation, ref buildPhysicsWorld.PhysicsWorld, this.Dependency);
 
-
+        #region
         //EntityQuery playerQuery = GetEntityQuery(typeof(PlayerTag));
         //var playersNativeArray = playerQuery.ToEntityArray(Allocator.TempJob);
         //int nPlayers = playersNativeArray.Length;
@@ -128,7 +128,7 @@ public class BulletHitSystem : SystemBase
         //        }
         //    }
         //}).WithDisposeOnCompletion(playersNativeArray).Schedule(JobHandle.CombineDependencies(bulletSysOutputDeps, enemySysOutputDeps));
-
+        #endregion
         /*
             TODO: (REVISAR COMENTARIO) IMPORTANTE: Esto es necesario, por defecto SystemBase gestiona las dependencias en automantico PERO
             BulletOnHitTriggerJob es un Job especial, el y todos los que no sean del tipo Entities.ForEach... no se gestionan en automatico.
@@ -147,7 +147,7 @@ public class BulletHitSystem : SystemBase
         // Esperamos a que se termine de contar.
         counterDependency.Complete();
         // Asignamos la nueva puntuacion.
-        // TODO : Asignar la nueva puntuacion qui.
+        SJDN.SceneManager.instance.AddScore(destroyedEnemiesCounterArray[0] * 100);
         //TextUpdater.textUpdaterInstance.SetScore(destroyedEnemiesCounterArray[0] * 100);
         // Liberamos el array con la informacion extraida del job que cuenta las naves a destruir.
         destroyedEnemiesCounterArray.Dispose();
