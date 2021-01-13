@@ -54,18 +54,21 @@ public class DestroyEnemies : SystemBase
         bool allreadyHitted = false;
         foreach (Entity playerE in playersEntityNativeArray)
         {
-            if (playerHittedArray[playerE].wasPlayerHitted && !allreadyHitted)
+            if (playerHittedArray[playerE].wasPlayerHitted)
             {
                 // Uno de los dos jugadores ha recibido danyos por lo que al otro no le afectaria.
-                allreadyHitted = true;
-                SJDN.SceneManager.instance?.LoseHealth();
+                PoolingScript.instance?.ShowEffectAtPosition("PlayerShockWave", translationsArray[playerE].Value);
+                if (!allreadyHitted)
+                {
+                    allreadyHitted = true;
+                    SJDN.SceneManager.instance?.LoseHealth();
+                }
             }
             // Los marcamos como no danyados.
             playerHittedArray[playerE] = new PlayerHitted() { wasPlayerHitted = false };
         }
 
         playersEntityNativeArray.Dispose();
-        // TODO: Aqui instanciamos las explosiones.
 
         // Nos aseguramos de que el job haya terminado antes de ejecutar el buffer NOTA: como tenemos un Dependecy.Complete() se
         // sobreentiende que ya habria terminado pero por seguridad mejor lo dejamos.

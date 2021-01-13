@@ -136,11 +136,14 @@ public class BulletHitSystem : SystemBase
 
         // Aqui comprobamos cuantos de los enemigos se han destruido por un impacto de bala y lo almacenamos en el array.
         NativeArray<int> destroyedEnemiesCounterArray = new NativeArray<int>(new int[]{0}, Allocator.TempJob);
-        var counterDependency = Entities.WithAll<EnemyTag>().ForEach((in EnemyData enemyData) =>
+        NativeList<float3> destroyedEnemiesPositionArray = new NativeList<float3>(Allocator.TempJob);
+        
+        var counterDependency = Entities.WithAll<EnemyTag>().ForEach((in EnemyData enemyData, in Translation enemyPos) =>
         {
             if (enemyData.shouldBeDestroyed)
             {
                 destroyedEnemiesCounterArray[0] += 1;
+                destroyedEnemiesPositionArray.Add(enemyPos.Value);
             }
         }).Schedule(bulletSysOutputDeps);
 
@@ -148,11 +151,13 @@ public class BulletHitSystem : SystemBase
         counterDependency.Complete();
         // Asignamos la nueva puntuacion.
         SJDN.SceneManager.instance.AddScore(destroyedEnemiesCounterArray[0] * 100);
+        PoolingScript.instance.ShowEffectAtMultiplePositions("EnemyExplosion", destroyedEnemiesPositionArray); // TODO: Haz unas constantes para los nombres.
         //TextUpdater.textUpdaterInstance.SetScore(destroyedEnemiesCounterArray[0] * 100);
         // Liberamos el array con la informacion extraida del job que cuenta las naves a destruir.
         destroyedEnemiesCounterArray.Dispose();
+        destroyedEnemiesPositionArray.Dispose();
 
-        
+
         Dependency = JobHandle.CombineDependencies(enemySysOutputDeps, Dependency); // TODO: enemySysOutputDeps o expansiveWave?
     }
 }
