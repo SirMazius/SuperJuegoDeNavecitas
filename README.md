@@ -12,6 +12,7 @@ mejorar ampliamente el rendimiento de los juegos al estructurar los datos en mem
 
 El primer gameplay se puede encontrar en el siguiente enlace: https://youtu.be/sNvQRO9VpuI 
 El gameplay actual se puede encontrar en el siguiente enlace: https://youtu.be/rWaNoEykUXo
+Una build del juego se puede descargar desde el siguiente enlace: https://drive.google.com/file/d/1KFHkIvxVZJhI-wAoKeBODjS1Fx0h8ELR/view?usp=sharing
 
 # TUTORIAL y GAMEPLAY 
     El objetivo del juego es sobrevivir a tantas oleadas como sea posible, el juego dispone de una dificultad "dinámica" esto es: Cada vez que el jugador sea capaz de eliminar a todos los enemigos antes de que llegue la siguiente oleada, aumentará la frecuencia de aparición así como el número de enemigos.
