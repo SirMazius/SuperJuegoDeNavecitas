@@ -10,7 +10,6 @@ using Unity.Transforms;
     Sistema encargado de hacer que los enemigos sigan al jugador tratando de destruirlo. 
 */
 
-[AlwaysUpdateSystem]
 public class EnemiesTargettingSystem : SystemBase
 {
     [BurstDiscard]
@@ -66,7 +65,7 @@ public class EnemiesTargettingSystem : SystemBase
                     rotation.Value = quaternion.LookRotationSafe(enemyVelocity.Linear, math.up());
             }
 
-            }).WithDisposeOnCompletion(playerEntitiesArray).Run();
+            }).WithDisposeOnCompletion(playerEntitiesArray).Run(); // TODO: Schedule o Parallel.
         #endregion
 
         
@@ -113,6 +112,6 @@ public class EnemiesTargettingSystem : SystemBase
                 rotation.Value = quaternion.LookRotationSafe(enemyVelocity.Linear, math.up());
             }
 
-        }).WithDisposeOnCompletion(enemyEntitiesArray).Schedule();
+        }).WithDisposeOnCompletion(enemyEntitiesArray).Schedule(); // TODO:  Parallel.
     }
 }

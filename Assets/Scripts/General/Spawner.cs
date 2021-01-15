@@ -18,8 +18,10 @@ public class Spawner : MonoBehaviour
     public int initialEnemies;
     float time;
     private bool freshWave;
+    public static int a = 0;
     // Start is called before the first frame update
     EndSimulationEntityCommandBufferSystem instantiateEntitiesCommandBuffer;
+    private List<Entity> enemies;
 
     void Start()
     {
@@ -28,9 +30,10 @@ public class Spawner : MonoBehaviour
         instantiateEntitiesCommandBuffer = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
         entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
         
-        blobAsset = new BlobAssetStore(); 
+        blobAsset = new BlobAssetStore();
         GameObjectConversionSettings conversionSettings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, blobAsset);
         enemyEntity = GameObjectConversionUtility.ConvertGameObjectHierarchy(enemyPrefab, conversionSettings);
+        enemies = new List<Entity>();
         //
     }
     
@@ -62,9 +65,13 @@ public class Spawner : MonoBehaviour
                 float randomAngle = UnityEngine.Random.Range(0, 2 * math.PI);
                 float3 randomPos = new float3(math.cos(randomAngle) * circleRadious + circleCenter.x, 0,
                 math.sin(randomAngle) * circleRadious + circleCenter.z);
-
-                var instantiatedEnemy = entityManager.Instantiate(enemyEntity);
-                entityManager.SetComponentData(instantiatedEnemy, new Translation() { Value = randomPos });
+                if (enemyEntity != Entity.Null)
+                {
+                    var instantiatedEnemy = entityManager.Instantiate(enemyEntity);
+                    entityManager.SetComponentData(instantiatedEnemy, new Translation() { Value = randomPos });
+                    enemies.Add(instantiatedEnemy);
+                }
+                
             }
 
             time = 0;
@@ -100,10 +107,37 @@ public class Spawner : MonoBehaviour
 
     private void OnDisable()
     {
+        /* 
+            TODAS LAS ENTIDADES TIENEN QUE STAR CAPUT ? PUES SI 
+            Y DONDE LO EXPLICN? PUES EN NINGUN LADO PARA VARIAR.
+        */
+        //var endSimulationBufferSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+        //World.DisposeAllWorlds();
+        //EntityCommandBuffer jobCommandBuffer = endSimulationBufferSystem.CreateCommandBuffer();
+
+        // Esto ha servido de poco.
+        //World.DefaultGameObjectInjectionWorld.DestroySystem(World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<LostBulletsSystem>());
+        //World.DefaultGameObjectInjectionWorld.DestroySystem(World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<DestroyEnemies>());
+        //World.DefaultGameObjectInjectionWorld.DestroySystem(World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<InputSystem>());
+        //World.DefaultGameObjectInjectionWorld.DestroySystem(World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<ShootingSystem>());
+
+        //foreach (Entity e in World.DefaultGameObjectInjectionWorld.EntityManager.GetAllEntities())
+        //{
+        //    //jobCommandBuffer.DestroyEntity(e);
+        //    World.DefaultGameObjectInjectionWorld.EntityManager.DestroyEntity(e);
+        //}
+
+        foreach (Entity e in enemies)
+        {
+            World.DefaultGameObjectInjectionWorld.EntityManager.DestroyEntity(e);
+        }
+
+
+        if (blobAsset != null)
+        {
+            blobAsset.Dispose();
+        }
+        
         // Tenemos que destruir todas las entidades.
-    }
-    private void OnDestroy()
-    {
-        blobAsset.Dispose();
     }
 }

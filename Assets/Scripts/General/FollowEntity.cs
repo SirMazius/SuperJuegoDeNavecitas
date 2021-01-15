@@ -24,7 +24,7 @@ public class FollowEntity : MonoBehaviour
     // Empleamos esto para asegurarnos de que los systems se han ejecutado.
     private void LateUpdate()
     {
-        if (playerEntity != Entity.Null)
+        if (playerEntity != Entity.Null && eM.Exists(playerEntity))
         {
             float3 playerEntityPosition = eM.GetComponentData<Translation>(playerEntity).Value;
             transform.position = new Vector3(playerEntityPosition.x, playerEntityPosition.y, playerEntityPosition.z);

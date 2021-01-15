@@ -24,8 +24,7 @@ public class ShootingSystem : SystemBase
     {
         // Inicializamos la referencia.
         instantiateEntitiesCommandBuffer = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
-        //time = new NativeArray<float>(new float[] {0.0f}, Allocator.Persistent);
-        
+        //time = new NativeArray<float>(new float[] {0.0f}, Allocator.Persistent);   
     }
 
     protected override void OnUpdate()

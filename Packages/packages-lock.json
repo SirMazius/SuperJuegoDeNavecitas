@@ -1,9 +1,9 @@
 {
   "dependencies": {
     "com.av.smart-hierarchy": {
-      "version": "file:C:/Users/Matias/Desktop/Smart-Hierarchy-master",
+      "version": "file:Smart-Hierarchy-master",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
       "dependencies": {}
     },
     "com.unity.burst": {

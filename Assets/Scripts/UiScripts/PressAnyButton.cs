@@ -10,11 +10,26 @@ public class PressAnyButton : MonoBehaviour
     public static bool wasAnyButtonPressed()
     {
         // Por lo visto no hay una forma mejor de comprobar cualquier input.
-        bool keyPressed = Keyboard.current.anyKey.wasPressedThisFrame;
-        bool buttonPressed = Gamepad.current.buttonSouth.wasPressedThisFrame
+        // bool keyPressed = Keyboard.current.anyKey.wasPressedThisFrame;
+        //bool buttonPressed = Gamepad.current.buttonSouth.wasPressedThisFrame
+        //    || Gamepad.current.buttonWest.wasPressedThisFrame
+        //    || Gamepad.current.buttonNorth.wasPressedThisFrame
+        //    || Gamepad.current.buttonEast.wasPressedThisFrame;
+
+        bool keyPressed = Keyboard.current != null ? Keyboard.current.anyKey.wasPressedThisFrame : false;
+
+        bool buttonPressed;
+        if (Gamepad.current != null)
+        {
+            buttonPressed = Gamepad.current.buttonSouth.wasPressedThisFrame
             || Gamepad.current.buttonWest.wasPressedThisFrame
             || Gamepad.current.buttonNorth.wasPressedThisFrame
             || Gamepad.current.buttonEast.wasPressedThisFrame;
+        }
+        else
+        {
+            buttonPressed = false;
+        }
 
         return keyPressed || buttonPressed;
     }
@@ -29,7 +44,7 @@ public class PressAnyButton : MonoBehaviour
         if (wasAnyButtonPressed())
         {
             gameObject.SetActive(false);
-            mainMenu.SetActive(true);   
+            mainMenu.SetActive(true);
         }
     }
 }

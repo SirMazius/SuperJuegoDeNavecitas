@@ -5,7 +5,7 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-public class EnemiesMovingSystem : SystemBase
+public class CleanScene : SystemBase
 {
     protected override void OnUpdate()
     {

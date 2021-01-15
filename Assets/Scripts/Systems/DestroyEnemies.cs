@@ -11,10 +11,10 @@ using Unity.Transforms;
 [UpdateAfter(typeof(BulletHitSystem))]
 public class DestroyEnemies : SystemBase
 {
-    BeginSimulationEntityCommandBufferSystem DestroyEnemyEntitiesCommandBuffer;
+    EndSimulationEntityCommandBufferSystem DestroyEnemyEntitiesCommandBuffer;
     protected override void OnCreate()
     {
-        DestroyEnemyEntitiesCommandBuffer = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
+        DestroyEnemyEntitiesCommandBuffer = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
     }
     // Buffer que ejecutara la destruccion de las entidades.
     

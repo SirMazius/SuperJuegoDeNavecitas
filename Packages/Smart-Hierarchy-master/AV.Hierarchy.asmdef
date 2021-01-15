@@ -1,0 +1,16 @@
+{
+    "name": "AV.Hierarchy",
+    "references": [],
+    "includePlatforms": [
+        "Editor",
+        "Stadia"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Unity.Entities;
+using Unity.Jobs;
 using UnityEngine;
 /*
     Esta clase gestiona la condicion de derrota del jugador. 
@@ -16,6 +17,7 @@ namespace SJDN // Como somos bastante listos este sceneManager enmascara al de U
         public GameDataSO gameData;
         public int healthRemaining;
         private InputSystem inputSystem;
+        
         // Start is called before the first frame update
         void Start()
         {
@@ -42,15 +44,18 @@ namespace SJDN // Como somos bastante listos este sceneManager enmascara al de U
             // Se acaba la partida.
             if (healthRemaining <= 0)
             {
-
+                /*
+                    En lugar de cepillarnos aqui todas las entidades vamos a hacerlo en un nuevo sistema una vez se cargue el nivel. 
+                */
+                Debug.Log("N ENTIDADES ANTES -> " + World.DefaultGameObjectInjectionWorld.EntityManager.GetAllEntities().Length);
+                // Nos deshacemos del input sistem y cargamos la escena.
+                
+                Debug.Log("N ENTIDADES ANTES -> " + World.DefaultGameObjectInjectionWorld.EntityManager.GetAllEntities().Length);
+                //World.DefaultGameObjectInjectionWorld.DestroySystem(inputSystem);
+                //World.DefaultGameObjectInjectionWorld.EntityManager.
+                Debug.Log("ALGO");
+                World.DefaultGameObjectInjectionWorld.DestroySystem(inputSystem);
                 UnityEngine.SceneManagement.SceneManager.LoadScene("EndScene");
-                //    Debug.Log("FIN de la partida");
-                //    // TODO: Ejecutar una query que marque para destruiar a las naves de los enemigos. y ejecutar una corutina que nos cambie de escena.
-                //    /*
-                //        EL SISTEMA QUE DESTRUYE A LOS ENEMIGOS ES EL ENCARCAGADO DE INSTANCIA EXPLOSIONES DESDE EL POOLER. 
-                //        CREAMOS OTRO SISTEMA QUE SE ENCARGUE DE ESTRUIR A LOS JUGADORES E INTANCIAR TAMBIEN DESDE EL POOLER.
-                //    */
-                //}
             }
         }
 
@@ -83,9 +88,12 @@ namespace SJDN // Como somos bastante listos este sceneManager enmascara al de U
             scoreText.SetText(@"SCORE <material=Liberation2>" + gameData.finalScore.ToString());
         }
 
-        private void OnDisable()
+        struct cleanJob : IJob
         {
-            World.DefaultGameObjectInjectionWorld.DestroySystem(inputSystem);
+            public void Execute()
+            {
+                
+            }
         }
     }
 

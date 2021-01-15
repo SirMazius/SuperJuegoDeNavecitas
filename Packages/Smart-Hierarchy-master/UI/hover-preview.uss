@@ -1,0 +1,19 @@
+﻿
+HoverPreview {
+    width: 48;
+    height: 48;
+}
+
+ObjectPreviewContainer {
+    flex-grow: 1;
+    
+    padding: 0;
+    border-radius: 12;
+    background-color: rgba(255, 255, 255, 0.5);
+
+    overflow: hidden;
+}
+
+IMGUIContainer {
+    opacity: 1;
+}

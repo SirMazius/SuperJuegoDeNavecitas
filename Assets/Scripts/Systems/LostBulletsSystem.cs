@@ -21,6 +21,11 @@ public class LostBulletsSystem : SystemBase
     }
     protected override void OnUpdate()
     {
+
+        if (Spawner.a == 1)
+        {
+            UnityEngine.Debug.Log("ENTRAMOS");
+        }
         // Preparamos un buffer para eliminar las balas que se hayan salido de la vision al acabar el frame.
         EntityCommandBuffer.ParallelWriter localBuffer = endSimulationCommandBuffer.CreateCommandBuffer().AsParallelWriter();
         // Definimos una Query que busque a los jugadores y recuperamos sus entidades.
@@ -42,7 +47,7 @@ public class LostBulletsSystem : SystemBase
             {
                 var player = playersEntities[i];
                 // Antes de acceder al transform, tenemos que comprobar si los transform recogidos tienen el de nuestro jugador.
-                if (translationList.HasComponent(player)) 
+                if (player != Entity.Null && translationList.HasComponent(player)) 
                 {
 
                     if (math.distance(translationList[bulletEntity].Value, translationList[player].Value) > 100.0f)
@@ -50,10 +55,13 @@ public class LostBulletsSystem : SystemBase
                         localBuffer.DestroyEntity(entityInQueryIndex, bulletEntity);
                     }
                 }
+                else if (player == Entity.Null)
+                {
+                    localBuffer.DestroyEntity(entityInQueryIndex, bulletEntity);
+                }
             }
             // Esto esta preparado para que trabaje en paralelo pero es un overkill en toda regla no van a haber > 100 balas en pantalla ni de conya, igual es hasta mas lento.
         }).WithDisposeOnCompletion(playersEntities).ScheduleParallel();
-
 
         endSimulationCommandBuffer.AddJobHandleForProducer(Dependency);
     }

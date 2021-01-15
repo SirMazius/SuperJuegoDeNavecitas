@@ -12,11 +12,9 @@ public class EndingScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //World.DefaultGameObjectInjectionWorld = new World("Default World");
+        //World.DefaultGameObjectInjectionWorld.QuitUpdate = true;
         var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-        foreach (Entity e in entityManager.GetAllEntities())
-        {
-            entityManager.DestroyEntity(e);
-        }
         scoreText.SetText(@"<material=Liberation2>SCORE: " + gameData.finalScore);
     }
 
@@ -25,6 +23,7 @@ public class EndingScript : MonoBehaviour
     {
         if (PressAnyButton.wasAnyButtonPressed())
         {
+            VoidsSystem.DestroyVoidsInScene();
             SceneManager.LoadScene(0);
         }
     }
