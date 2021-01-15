@@ -64,7 +64,7 @@ Finalmente, respecto al código, se ha comentado todo el proyecto de forma exhau
 
 A grandes rasgos, el "loop" del juego es el siguiente, entrecomillas porque todo es concurrente y asíncrono. El jugador mediante el mando produce un input, este input es capturado por InputSystem.cs y prepara los datos para que sean procesados por PlayerMovementSystem.cs. Los enemigos son desplegados por Spawner.cs, según se instancian los enemigos, el sistema EnemyTargettingSystem.cs los recoge y hace que se muevan en dirección al jugador. En caso de que el jugador les acierte con un disparo (HitSystem.cs) los enemigos son marcados como destruidos, y otro sistema se encarga de borrarlos instanciando en su posición un sistema de partículas empleando la clase PoolingScript para hacerlo de forma eficiente.
 
-A continuación describiremos detalles de implementación importantes de algunas de las clases más importantes. Las clases que describiremos son las siguientes:
+A continuación describiremos el funcionamiento de algunas de las clases más importantes. Las clases que describiremos son las siguientes:
 
 - HitSystem.cs 
 - DestroyEnemies.cs
@@ -76,5 +76,39 @@ A continuación describiremos detalles de implementación importantes de algunas
 - SceneManager.cs
 - Spawner.cs
 
+## HitSystem.cs
+
+Este sistema se encarga de gestionar las colisiones entre las balas y los enemigos así como de la interacción del jugador y el enemigo. Encontramos dos Jobs principales EnemyOnHitTriggerJob y BulletOnHitTriggerJob. El primero se encarga de detecar si un jugador ha chocado contra el enemigo, en ese caso se marca al jugador como dañado. En el segundo se opera de forma similar, cuando un proyectil alcanza a un enemigo lo marca como dañado.
+
+## DestroyEnemies.cs
+
+En este sistema iteramos sobre los enemigos, en caso de que hayan recibido daños, lo destruimos e instanciamos una explosión empleando PoolingScript.cs. También se comprueba si un jugador ha recibido daños, destruyendo los enemigos colindantes para dar algo de margen de maniobra.
+
+## EnemyTargettingSystem.cs
+
+Este sistema se encarga de dirigir a los enemigos hacia el jugador más cercano para ello emplea _steering behaviours_ lo que hace posible esquivarlos.
+
+## InputSystem.cs 
+
+InputySystem.cs se encarga de captar el input del mando, y escribirlo en el componente que lleva asociado el jugador, este sistema permite detectar en que escena estamos asociando a cada jugador un mando distinto.
+
+## VoidsSystem.cs
+
+Este sistema se encarga de gestionar los _voids_ de las pantallas de inicio y fin, calcula los voids cercanos y hace que se alineen manteniendo cierta separación los unos con los otros.
 
 
+## PlayerMovementSystem.cs
+
+Es el encargado de una vez se han recogido los inputs por el InputSystem.cs, procesarlos asignando una translación y una rotación al jugador.
+
+## PoolingScript.cs
+
+PoolingScript permite instanciar diferentes sistemas de partículas de forma eficiente, internamente se cuenta con tantas colas como tipos de sistema de partículas tengamos. Cuando se decide instanciar uno, se coge el primer elemento de la cola y se pone al final. De esta forma evitar crear nuevos efectos cada vez que se requieren. El usario puede determinar cuandos sistemas del mismo típo pueden existir simultáneamente.  
+
+# SceneManager.cs
+
+Es el encargado de actualizar la puntuación y la salud restante del jugador. En caso de que la salud llegue a 0 destruimos todas las entidades y pasamos a la pantalla de fin de juego.
+
+# Spawner.cs
+
+Finalmente la clase Spawner instancia las oleadas de enemigos. A medida que avanza el tiempo, se instancia un número determinado de enemigos formando un círculo alrededor de los jugadores. La frecuencia de instanciado así como el número dependen de la eficacia de los jugadores. Si los jugadores consiguen destruir a todos los enemigos antes de que empiece la siguiente ronda, se instanciarán más y más rápido.
