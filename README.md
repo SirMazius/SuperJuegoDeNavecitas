@@ -1,4 +1,5 @@
 # Super Juego de Navecitas (PreALPHA) Unity 2020.1.17f1
+![Alt Text](/SJDNCaos1Compressed.gif)
 
 Para el desarrollo de esta práctica se ha propuesto implementar un _bullet hell_ empleando el nuevo sistema DOTS de Unity. Este sistema permite 
 mejorar ampliamente el rendimiento de los juegos al estructurar los datos en memoria de forma que se aproveche al máximo la chache así como los diferentes hilos del procesador.
