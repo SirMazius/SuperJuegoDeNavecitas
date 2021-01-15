@@ -12,7 +12,6 @@ public class OptionsScript : MonoBehaviour
     public GameObject toggle;
     private void OnEnable()
     {
-        Debug.Log("HE");
         EventSystem.current.SetSelectedGameObject(toggle);
     }
     public void SetFullScreen(bool isFullScreen)
@@ -22,7 +21,6 @@ public class OptionsScript : MonoBehaviour
 
     public void SetEpileptic(bool amIepileptic)
     {
-        Debug.Log("OH");
         if (amIepileptic)
         {
             postProcessingVolume.GetComponent<Volume>().profile = postProcessingVolumeEpileptic;
