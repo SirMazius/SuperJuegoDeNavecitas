@@ -8,7 +8,7 @@ public class QuitScript : MonoBehaviour
 {
     public GameObject playButton;
 
-    private void Start()
+    private void OnEnable()
     {
         EventSystem.current.SetSelectedGameObject(playButton);    
     }
