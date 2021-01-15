@@ -42,7 +42,7 @@ public class ShootingSystem : SystemBase
                 CharacterControllerInputData playerData = characterInputDataArray[cannonData.player];//EntityManager.GetComponentData<CharacterControllerInputData>(player);
 
                 //// Si esta disparando.
-                if (playerData.shooting /*&& time[0] > 0.1f*/ ) // TODOOOOO Necesitamos 2 tiempos uno para cada jugador.
+                if (playerData.shooting /*&& time[0] > 0.1f*/ )
                 {
                     // Instanciamos una bala.
                     Entity instantiatedEntity = commandBuffer.Instantiate(cannonData.ammo);
