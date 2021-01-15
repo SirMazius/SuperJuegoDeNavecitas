@@ -13,8 +13,6 @@ Un gameplay rudimentario se puede encontrar en el siguiente enlace: https://yout
 # TUTORIAL y GAMEPLAY 
     El objetivo del juego es sobrevivir a tantas oleadas como sea posible, el juego dispone de una dificultad "dinámica" esto es: Cada vez que el jugador sea capaz de eliminar a todos los enemigos antes de que llegue la siguiente oleada, aumentará la frecuencia de aparición así como el número de enemigos.
 
-    Hay una falta de feedback cuando el enemigo recibe un impacto. En este momento se disminuye su vida y los enemigos cercanos explotan, esto se hace así para que el jugador tenga algo de margen de maniobra. Esto se solventará en futuras versiones añadiendo unos sistemas de partículas.
-
     Los controles son:
     - LJoystick (mover personaje)
     - RJoystick (apuntar personaje)
