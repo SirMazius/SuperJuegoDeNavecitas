@@ -45,12 +45,12 @@ Describimos a continuación los módulos que se han desarrollado.
 - Estética _Neon_ empleando la URP y mapas de emisión
 - Sistema de sonido
 - Sistema de particulas mediante Pooling
-- Mejoras de la UI 
+- Mejoras de la UI
+- Tutorial 
 
 Cosas que se han quedado por el camino:
 
 - Sistema de puntuaciones online ***1**
-- Tutorial _ingame_
 - Mejoras en los patrones de spawn y de los enemigos
 - Más mejoras de la UI 
 
