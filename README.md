@@ -1,4 +1,8 @@
 # Super Juego de Navecitas (PreALPHA) Unity 2020.1.17f1
+  **NO HAY SOPORTE PARA RATON Y TECLADO** Se necesitan 1 o 2 mandos para jugar.
+
+  **NOTA** Dado todo el trabajo que tiene que hacer el editor para actualizar el inspector de entidades, el rendimiento en el editor se ve muy mermado. Para probarlo se aconseja usar la build provista.
+
 ![Alt Text](/SJDNCaos1Compressed.gif)
 
 Para el desarrollo de esta práctica se ha propuesto implementar un _bullet hell_ empleando el nuevo sistema DOTS de Unity. Este sistema permite 
@@ -6,7 +10,7 @@ mejorar ampliamente el rendimiento de los juegos al estructurar los datos en mem
 
 Un gameplay rudimentario se puede encontrar en el siguiente enlace: https://youtu.be/sNvQRO9VpuI 
 
-# TUTORIAL y GAMEPLAY
+# TUTORIAL y GAMEPLAY 
     El objetivo del juego es sobrevivir a tantas oleadas como sea posible, el juego dispone de una dificultad "dinámica" esto es: Cada vez que el jugador sea capaz de eliminar a todos los enemigos antes de que llegue la siguiente oleada, aumentará la frecuencia de aparición así como el número de enemigos.
 
     Hay una falta de feedback cuando el enemigo recibe un impacto. En este momento se disminuye su vida y los enemigos cercanos explotan, esto se hace así para que el jugador tenga algo de margen de maniobra. Esto se solventará en futuras versiones añadiendo unos sistemas de partículas.
@@ -15,6 +19,9 @@ Un gameplay rudimentario se puede encontrar en el siguiente enlace: https://yout
     - LJoystick (mover personaje)
     - RJoystick (apuntar personaje)
     - RTrigger (Disparar)
+
+
+  
         
 
 
@@ -51,4 +58,23 @@ Cosas que se han quedado por el camino:
 
 Finalmente, respecto al código, se ha comentado todo el proyecto de forma exhaustiva con el fin de que quede claro que hace cada módulo. No obstante, para cualquier duda pongase en contacto conmigo.
 
-***1** Respecto al sistema de puntuación online no se ha podido integrar en el proyecto por falta de tiempo. No obstante sí se ha desarrollado en el lado del servidor. A través de esta url https://superjuegodenavecitasapi.azurewebsites.net/score/1 se pueden hacer llamadas a una api REST desarrollada en python empleando flask. 
+***1** Respecto al sistema de puntuación online no se ha podido integrar en el proyecto por falta de tiempo. No obstante sí se ha desarrollado en el lado del servidor. A través de esta url https://superjuegodenavecitasapi.azurewebsites.net/score/1 se pueden hacer llamadas a una api REST desarrollada en python empleando flask.
+
+# Detalles de implementacion
+
+A grandes rasgos, el "loop" del juego es el siguiente, entrecomillas porque todo es concurrente y asíncrono. El jugador mediante el mando produce un input, este input es capturado por InputSystem.cs y prepara los datos para que sean procesados por PlayerMovementSystem.cs. Los enemigos son desplegados por Spawner.cs, según se instancian los enemigos, el sistema EnemyTargettingSystem.cs los recoge y hace que se muevan en dirección al jugador. En caso de que el jugador les acierte con un disparo (HitSystem.cs) los enemigos son marcados como destruidos, y otro sistema se encarga de borrarlos instanciando en su posición un sistema de partículas empleando la clase PoolingScript para hacerlo de forma eficiente.
+
+A continuación describiremos detalles de implementación importantes de algunas de las clases más importantes. Las clases que describiremos son las siguientes:
+
+- HitSystem.cs 
+- DestroyEnemies.cs
+- EnemyTargettingSystem.cs
+- InputSystem.cs
+- VoidsSystem.cs
+- PlayerMovementSystem.cs
+- PoolingScript.cs
+- SceneManager.cs
+- Spawner.cs
+
+
+
