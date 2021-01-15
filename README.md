@@ -3,6 +3,8 @@
 
   **NOTA** Dado todo el trabajo que tiene que hacer el editor para actualizar el inspector de entidades, el rendimiento en el editor se ve muy mermado. Para probarlo se aconseja usar la build provista.
 
+  **NOTA** Aunque pase la fecha de entrega se espera acabar desarrollando todos los puntos restantes y portarlo a móviles.
+
 ![Alt Text](/SJDNCaos1Compressed.gif)
 
 Para el desarrollo de esta práctica se ha propuesto implementar un _bullet hell_ empleando el nuevo sistema DOTS de Unity. Este sistema permite 
@@ -52,6 +54,7 @@ Cosas que se han quedado por el camino:
 
 - Sistema de puntuaciones online ***1**
 - Mejoras en los patrones de spawn y de los enemigos
+- Animación fin de partida
 - Más mejoras de la UI 
 
 
@@ -62,6 +65,8 @@ Finalmente, respecto al código, se ha comentado todo el proyecto de forma exhau
 # Detalles de implementacion
 
 A grandes rasgos, el "loop" del juego es el siguiente, entrecomillas porque todo es concurrente y asíncrono. El jugador mediante el mando produce un input, este input es capturado por InputSystem.cs y prepara los datos para que sean procesados por PlayerMovementSystem.cs. Los enemigos son desplegados por Spawner.cs, según se instancian los enemigos, el sistema EnemyTargettingSystem.cs los recoge y hace que se muevan en dirección al jugador. En caso de que el jugador les acierte con un disparo (HitSystem.cs) los enemigos son marcados como destruidos, y otro sistema se encarga de borrarlos instanciando en su posición un sistema de partículas empleando la clase PoolingScript para hacerlo de forma eficiente.
+
+Respecto a la UI, y teniendo en cuenta mi inexperiencia con ella, la resolución se fija a FullHD en caso que sea posible, si no se adapta a la resolución nativa del monitor. Lo que puede dar lugar en algunos casos a textos desplazados, pero no debería influir en la jugabilidad.
 
 A continuación describiremos el funcionamiento de algunas de las clases más importantes. Las clases que describiremos son las siguientes:
 
