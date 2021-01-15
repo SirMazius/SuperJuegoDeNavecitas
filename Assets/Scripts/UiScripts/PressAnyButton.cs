@@ -34,8 +34,26 @@ public class PressAnyButton : MonoBehaviour
         return keyPressed || buttonPressed;
     }
 
+    /*
+        Forzamos FullHD como resolucion si es posible... 
+    */
     private void Start()
     {
+        bool isFullHDposible = false;
+        //Resolution[] resolutionsArray = 
+        foreach (Resolution r in Screen.resolutions)
+        {
+            if (r.width == 1920 && r.height == 1080)
+            {
+                isFullHDposible = true;
+                break;
+            }
+        }
+
+        if (isFullHDposible)
+        {
+            Screen.SetResolution(1920, 1080, true);
+        }
         mainMenu.SetActive(false);
     }
     // Update is called once per frame
