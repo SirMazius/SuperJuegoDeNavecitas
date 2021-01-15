@@ -2,15 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SelectGameMode : MonoBehaviour
 {
-    public GameObject Player1Button;
+    public GameObject Player1ButtonGo;
+    public GameObject Player2ButtonGo;
+    private  Button player2Button;
+    private void Update()
+    {
+        if (Gamepad.all.Count != 2)
+        {
+            player2Button.interactable = false;
+        }
+        else
+        {
+            player2Button.interactable = true;
+        }
+    }
 
     private void OnEnable()
     {
-        EventSystem.current.SetSelectedGameObject(Player1Button);
+        player2Button = Player2ButtonGo.GetComponent<Button>();
+        EventSystem.current.SetSelectedGameObject(Player1ButtonGo);
     }
 
     public void play1playerGame()

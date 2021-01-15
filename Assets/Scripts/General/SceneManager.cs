@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Entities;
 using Unity.Jobs;
@@ -15,9 +16,11 @@ namespace SJDN // Como somos bastante listos este sceneManager enmascara al de U
         public TMPro.TextMeshProUGUI scoreText;
         public TMPro.TextMeshProUGUI healthText;
         public GameDataSO gameData;
+        public AudioSource audioSource;
         public int healthRemaining;
         private InputSystem inputSystem;
-        
+        private bool enableLasserSound;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -28,6 +31,7 @@ namespace SJDN // Como somos bastante listos este sceneManager enmascara al de U
                 // Inicializamos los input del jugador ahora que sabemos en que escena nos encontramos.
                 inputSystem = World.DefaultGameObjectInjectionWorld.CreateSystem<InputSystem>();
                 inputSystem.Enabled = true;
+                enableLasserSound = true;
                 //inputSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<InputSystem>();
             }
             else
@@ -94,6 +98,23 @@ namespace SJDN // Como somos bastante listos este sceneManager enmascara al de U
             {
                 
             }
+        }
+
+        public void PlayLaserSound()
+        {
+            if (enableLasserSound)
+            {
+                instance?.audioSource.PlayOneShot(instance.audioSource.clip);
+                StartCoroutine("EnableLaserSound");
+            }
+                
+        }
+
+        IEnumerator EnableLaserSound()
+        {
+            enableLasserSound = false;
+            yield return new WaitForSeconds(0.1f);
+            enableLasserSound = true;
         }
     }
 

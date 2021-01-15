@@ -121,7 +121,7 @@ public class InputSystem : SystemBase/*, InputActions.IPlayerActionsActions*/ //
         //}).Schedule();
         #endregion 
         NativeArray<CharacterControllerInputData> auxCharactersControllerData = new NativeArray<CharacterControllerInputData>(2, Allocator.Temp);
-
+        // Asignamso los datos recogidos y los asignamos a una estructura IComponentData que luego lo pasa a la entidad.
         CharacterControllerInputData inputData = new CharacterControllerInputData();
         inputData.Movement = player1Movement;
         inputData.Looking = player1LookDirection;
@@ -134,9 +134,12 @@ public class InputSystem : SystemBase/*, InputActions.IPlayerActionsActions*/ //
         inputData.shooting = isPlayer2Shooting;
 
         auxCharactersControllerData[1] = inputData;
-        // Generamos una estructura que contenga todos los datos relativos a los input del jugador.
-        //CharacterControllerInputData[] auxCharactersControllerData = { new CharacterControllerInputData(), new CharacterControllerInputData() } ;
-        // Asignamos todos los datos relativos a los inputs del jugador.
+        
+        if (SJDN.SceneManager.instance != null && (isPlayer1Shooting || isPlayer2Shooting))
+        {
+            SJDN.SceneManager.instance.PlayLaserSound();
+        }
+
 
         Entities.WithAll<PlayerTag>().ForEach((ref CharacterControllerInputData characterInputData, in PlayerTag playerTag) =>
         {
